@@ -79,7 +79,7 @@ public class PushNotification implements IPushNotification {
 
     protected int postNotification(Integer notificationId) {
         final PendingIntent pendingIntent = getCTAPendingIntent();
-        final Notification notification = buildNotification(pendingIntent);
+        final Notification notification = buildNotification(pendingIntent, notificationId);
         return postNotification(notification, notificationId);
     }
 
@@ -131,18 +131,18 @@ public class PushNotification implements IPushNotification {
         return NotificationIntentAdapter.createPendingNotificationIntent(mContext, cta, mNotificationProps);
     }
 
-    protected Notification buildNotification(PendingIntent intent) {
-        return getNotificationBuilder(intent).build();
+    protected Notification buildNotification(PendingIntent intent, Integer notificationId) {
+        return getNotificationBuilder(intent, notificationId).build();
     }
 
-    protected Notification.Builder getNotificationBuilder(PendingIntent intent) {
+    protected Notification.Builder getNotificationBuilder(PendingIntent intent, Integer notificationId) {
         return new Notification.Builder(mContext)
-                .setContentTitle(mNotificationProps.getTitle())
-                .setContentText(mNotificationProps.getBody())
-                .setSmallIcon(mContext.getApplicationInfo().icon)
-                .setContentIntent(intent)
-                .setDefaults(Notification.DEFAULT_ALL)
-                .setAutoCancel(true);
+          .setContentTitle(mNotificationProps.getTitle())
+          .setContentText(mNotificationProps.getBody())
+          .setSmallIcon(mContext.getApplicationInfo().icon)
+          .setContentIntent(intent)
+          .setDefaults(Notification.DEFAULT_ALL)
+          .setAutoCancel(true);
     }
 
     protected int postNotification(Notification notification, Integer notificationId) {
