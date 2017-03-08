@@ -57,7 +57,7 @@ public class PushNotification implements IPushNotification {
 
     @Override
     public void onReceived() throws InvalidNotificationException {
-        postNotification(null);
+        postNotification(createNotificationId());
         notifyReceivedToJS();
     }
 
@@ -146,7 +146,7 @@ public class PushNotification implements IPushNotification {
     }
 
     protected int postNotification(Notification notification, Integer notificationId) {
-        int id = notificationId != null ? notificationId : createNotificationId(notification);
+        int id = notificationId != null ? notificationId : createNotificationId();
         postNotification(id, notification);
         return id;
     }
@@ -161,7 +161,7 @@ public class PushNotification implements IPushNotification {
         notificationManager.cancelAll();
     }
 
-    protected int createNotificationId(Notification notification) {
+    protected int createNotificationId() {
         return (int) System.nanoTime();
     }
 
